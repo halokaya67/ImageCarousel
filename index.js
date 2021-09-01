@@ -6,6 +6,7 @@ import App from './App';
 
 export default function Main() {
   return (
+    // Wraps the whole app to use react-native-paper library
     <PaperProvider>
       <App />
     </PaperProvider>
