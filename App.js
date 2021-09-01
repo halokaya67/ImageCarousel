@@ -1,21 +1,50 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, {useEffect, useState} from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import HomePage from './src/HomePage';
+import ImageDetails from './src/ImageDetails';
+import About from "./src/About";
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+const Stack = createNativeStackNavigator();
+
+export default function App(props) {
+  const [imageList, updateImageList] = useState([]);
+  const [atHomePage, updateAtHomePage] = useState(true);
+  const [page, updatePage] = useState(2);
+
+  return (     
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="HomePage" screenOptions={{headerShown: false}}>
+        <Stack.Screen name="HomePage">
+          {props => <HomePage
+            {...props}
+            imageList={imageList}
+            updateImageList={updateImageList}
+            atHomePage={atHomePage}
+            updateAtHomePage={updateAtHomePage}
+            page={page}
+            updatePage={updatePage}
+          />}
+        </Stack.Screen>
+        <Stack.Screen name="ImageDetails">
+          {props => <ImageDetails
+            {...props}
+            imageList={imageList}
+            updateImageList={updateImageList}
+            atHomePage={atHomePage}
+            updateAtHomePage={updateAtHomePage}
+            page={page}
+            updatePage={updatePage}
+          />}
+        </Stack.Screen>
+        <Stack.Screen name="About">
+          {props => <About
+            {...props}
+            atHomePage={atHomePage}
+            updateAtHomePage={updateAtHomePage}
+          />}
+        </Stack.Screen>
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
